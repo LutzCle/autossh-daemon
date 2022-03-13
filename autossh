@@ -1,0 +1,22 @@
+#!/bin/sh
+
+# PROVIDE: autossh
+# REQUIRE: NETWORKING
+
+. /etc/rc.subr
+
+name="autossh"
+rcvar="autossh_enable"
+
+# Change this as necessary
+proxy="your.proxyhost.name"
+proxy_port=7000
+
+load_rc_config $name
+
+command="/usr/local/bin/${name}"
+command_args="-M 20000 -f -4 -N -R ${proxy_port}:localhost:22 ${proxy}"
+autossh_user="autossh"
+autossh_chdir="/home/autossh"
+
+run_rc_command "$1"
